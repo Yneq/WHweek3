@@ -25,7 +25,7 @@ def getData(pageurl):
             print(title_div.find("a").string, likecount_text, fetch_publish_time(link))
                 #比較好的寫法是設變數publish_time=fetch_pubhlish_time(link)
                 #因為不用每印一次就要跑一次fetch_publish_time()
-
+                #但我還是希望留著提醒自己，一開始寫的code要好好保存
             
     pre_page = root.find("a", string="‹ 上頁")
     return results, ("https://www.ptt.cc"+pre_page["href"])
