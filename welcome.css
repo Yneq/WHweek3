@@ -1,0 +1,267 @@
+.nav{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+}
+
+.items{
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+}
+.nav-item {
+    padding-left: 20px;
+    padding-bottom: 5px;
+}
+
+.welcome{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:250px;
+    background-color:#bdd6f2;
+    margin-right: -8px;
+    margin-left: -8px;
+    
+}
+.text{
+    font-size:40px;
+    font-weight:bold;
+    text-align: center;
+}
+
+.promo-text {
+    padding-left: 90px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    background-color:#bdd6f2;
+    font-size:20px;
+}
+.text-block {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(223, 203, 203, 0.5); 
+    padding: 10px 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    
+}
+
+.text-block button {
+    background: none; 
+    border: none;
+    font-size:20px;
+}
+.bigframe {
+    position: relative;
+    background-color: #f5f5f5; 
+    height: 200px; 
+}
+
+.star-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 18px; 
+    height: 18px;
+    object-fit: contain;
+    opacity: 0.4; 
+}
+.promo-img {
+    width: 80px;
+    height: 50px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.bigboximg {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover;
+    
+}
+
+.close-btn {
+    display: none;
+}
+
+
+.burger-menu {
+    display: none; 
+    cursor: pointer;
+}
+
+
+
+@media screen and (min-width: 1201px) and (max-width: 1920px) {
+
+.content{
+    max-width:1200px;
+    margin: 0 auto;
+
+}
+.promotion{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 三列等宽 */
+    grid-gap: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.promo-item { 
+    height: 50px;
+    position: relative;
+    
+}
+
+.bigbox-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 20px; 
+}
+
+
+.bigbox-container .bigframe:nth-child(1),
+.bigbox-container .bigframe:nth-child(6) {
+    grid-column: span 2; 
+}
+
+}
+
+
+
+
+
+
+@media screen and (min-width: 601px) and (max-width: 1200px) {
+    .content {
+        width: 90%;
+        margin: auto; 
+    }
+    .promotion {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+    }
+    .promo-item:not(:last-child) {
+        flex: 1;
+        /* min-width: calc(50% - 10px);  */
+        height: 50px; 
+        position: relative;
+        margin-top: 20px;
+    }   
+    .promo-item:last-child {
+        width: 100%; 
+        height:50px;
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    /* .bigbox-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-right: -20px;
+        上面是另一種奇怪的解法 -20px;
+    } */
+
+    /* .bigbox-container .bigframe {
+        width: calc(25% - 20px);
+        
+    } */
+
+    /* .bigbox-container .bigframe:nth-last-child(-n+2) {
+        width: calc(50% - 20px); 
+    } */
+    .bigbox-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 創造一行四列 */
+        gap: 20px;
+    }
+    
+    .bigbox-container .bigframe:nth-last-child(-n+2) {
+        grid-column: span 2; /* 最後兩個框架各佔兩列 */
+    }
+}
+
+
+@media screen and (min-width: 1px) and (max-width: 600px) {
+    .content {
+        width: 90%;
+        margin: auto; 
+    }
+    .promotion {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
+    .promo-item {
+        width: 100%;
+        height: auto; 
+        position: relative;
+    }
+
+    .promo-item, .menu-item {
+        width: 100%;
+        height: auto; 
+        position: relative;
+    }
+    
+    .burger-menu {
+            display: block; 
+        }
+    .menu-popup {
+        display: none; 
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 50%;
+        height: 100vh;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        z-index: 1000;
+        transition: right 1s;
+    }
+    .menu-popup.visible {
+        display: block;
+        display: flex; 
+        }
+    .close-btn {
+        display: block; 
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        padding: 10px;
+    }
+    .menu-popup.visible .items, 
+    .menu-popup.visible .nav-item{
+        display: block; 
+    }
+    .items {
+    align-items: center;
+    width: 100%; 
+    }
+    .nav-item{
+        width: 100%; 
+    font-size: 1.5em; 
+    text-align: center;
+    padding: 20px; 
+    }
+    .text{
+        font-size:40px;
+        font-weight:bold;
+        text-align: center;
+    }
+    .bigbox-container{
+        display: grid;
+        grid-gap: 20px;
+    }
+}
