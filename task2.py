@@ -1,17 +1,18 @@
-import requests
+import urllib.request as req
 
 def fetch_data(url):
-    session = requests.Session()
-    headers = {
-        "cookie":"over18=1",
-        "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
-    }
-    response = session.get(url, headers=headers)
-    return response.text
+    request = req.Request(url, headers = {
+    "cookie":"over18=1",
+    "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+    })
+    with req.urlopen(request) as response:
+        data = response.read().decode("utf-8")
+    return data
 
 import bs4
 
-def getData(pageurl):    
+    
+def getData(pageurl):
     data = fetch_data(pageurl)
     root = bs4.BeautifulSoup(data, "html.parser")
     titles = root.find_all("div", class_="title")
@@ -25,7 +26,7 @@ def getData(pageurl):
             print(title_div.find("a").string, likecount_text, fetch_publish_time(link))
                 #比較好的寫法是設變數publish_time=fetch_pubhlish_time(link)
                 #因為不用每印一次就要跑一次fetch_publish_time()
-                #但我還是希望留著提醒自己，一開始寫的code要好好保存
+
             
     pre_page = root.find("a", string="‹ 上頁")
     return results, ("https://www.ptt.cc"+pre_page["href"])
@@ -40,8 +41,8 @@ def fetch_publish_time(link):       #結果這個找時間弄最久
         publish_time = "No Time" 
     return publish_time
 
-pageurl="https://www.ptt.cc/bbs/Lottery/index.html"
 
+pageurl="https://www.ptt.cc/bbs/Lottery/index.html"
 all_titles = []
 count=0
 while count<3:
