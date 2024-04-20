@@ -2,18 +2,19 @@ function toggleMenu() {
     var menuPopup = document.querySelector('#menuPopup');
     menuPopup.classList.toggle('visible');
 }
-   
+let attractions=[];
+
 document.addEventListener('DOMContentLoaded', function(){
     fetch('https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment-1')
     .then(function(response){
         return response.json();
     })
     .then(data =>{
-        let attractions = data.data.results;
+        attractions = data.data.results;
         let promoContainer = document.querySelector('.promotion')
         let bigBoxContainer = document.querySelector('.bigbox-container')
 
-        //清空容器，避免重複內容
+        //在這裡清空容器，避免重複內容
         while (promoContainer.firstChild) {
             promoContainer.removeChild(promoContainer.firstChild);
         }
@@ -24,17 +25,58 @@ document.addEventListener('DOMContentLoaded', function(){
 
         for (let i=0; i<3; i++){
             let spot = attractions[i];
-            let element = createSpotElement(spot, 'promo-item');
+            let element = createSpotElement(spot, 'promo-item');   //function後面設置
             promoContainer.appendChild(element);
         }
 
         for (let i=3; i<13; i++){
             let spot = attractions[i];
-            let element = createSpotElement(spot, 'bigframe');
+            let element = createSpotElement(spot, 'bigframe');   //function後面設置
             bigBoxContainer.appendChild(element);
         }
+    })
+    .then(() => {
+        // 確保數據已經加載完成後才添加事件監聽器
+        document.querySelector('.learn_more_button').addEventListener('click', function() {
+            let bigBoxContainer = document.querySelector('.bigbox-container');
+            let currentContentCount = bigBoxContainer.children.length;
+            let maxContent = attractions.length;
+        
+            for (let i = currentContentCount; i < currentContentCount + 10 && i < maxContent; i++) {
+                let spot = attractions[i];
+                let element = createSpotElement(spot, 'bigframe');
+                bigBoxContainer.appendChild(element);
+            }
+            updateBigFrames();
+        });
     });
 });
+
+function updateBigFrames() {
+    let frames = document.querySelectorAll('.bigbox-container .bigframe');
+    const screenWidth = window.innerWidth;
+
+    // 先重置所有元素的 gridColumn 设置
+    frames.forEach(frame => frame.style.gridColumn = "");
+
+    if (screenWidth <= 600) {
+        // 0-600px: 每个元素占满一整行
+        frames.forEach(frame => frame.style.gridColumn = "1fr");
+    } else if (screenWidth > 600 && screenWidth <= 1200) {
+        // 601-1200px: 每四个元素一行，均匀分布，不跨列
+        frames.forEach(frame => frame.style.gridColumn = "auto");
+    } else {
+        // 1201px 及以上: 每6个元素一行，第1个和每隔5个后的第1个元素跨两列
+        frames.forEach((frame, index) => {
+            if (index % 5 === 0) {
+                frame.style.gridColumn = "span 2";
+            }
+        });
+    }
+}
+
+
+
 
 function createSpotElement(spot, className){
     let spotDiv = document.createElement('div');
@@ -48,7 +90,7 @@ function createSpotElement(spot, className){
         imageUrl = imageUrl.toLowerCase(); 
         let jpgIndex = imageUrl.indexOf('.jpg'); 
         if (jpgIndex !== -1) {
-            img.src = imageUrl.substring(0, jpgIndex + 4); // 包含.jpg
+            img.src = imageUrl.substring(0, jpgIndex + 4); // 包含.jpg四個字
         }
     }
     img.alt = '這是景點';
@@ -80,7 +122,7 @@ function createSpotElement(spot, className){
         starIcon.className = 'star-icon';
         spotDiv.appendChild(starIcon);
     }
-    
 
     return spotDiv;
+    
 }
